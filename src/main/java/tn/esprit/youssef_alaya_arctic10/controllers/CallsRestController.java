@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.youssef_alaya_arctic10.entities.Calls;
 import tn.esprit.youssef_alaya_arctic10.services.ICallsServices;
+import tn.esprit.youssef_alaya_arctic10.entities.CallSkills;
+import tn.esprit.youssef_alaya_arctic10.entities.CallStatus;
+
 
 import java.util.List;
 import java.util.Set;
@@ -56,6 +59,40 @@ public class CallsRestController {
     @PutMapping("autoAssign")
     public void autoAssignCallsToAgents(@RequestBody Set<Long> callIds) {
         callsServices.autoAssignCallsToAgents(callIds);
+    }
+    @GetMapping("findByStatusAndAgentId/{status}/{agentId}")
+    List<Calls> findByStatusAndAssignedAgent_AgentsId(@PathVariable CallStatus status, @PathVariable long agentId) {
+        return callsServices.findByStatusAndAssignedAgent_AgentsId(status, agentId);
+    }
+
+    @GetMapping("findByStatus/{status}")
+    List<Calls> findByStatus(@PathVariable CallStatus status) {
+        return callsServices.findByStatus(status);
+    }
+
+    @GetMapping("findUnassigned")
+    List<Calls> findByAssignedAgentIsNull() {
+        return callsServices.findByAssignedAgentIsNull();
+    }
+
+    @GetMapping("findByRequiredSkills/{skill}")
+    List<Calls> findByRequiredSkillsContains(@PathVariable CallSkills skill) {
+        return callsServices.findByRequiredSkillsContains(skill);
+    }
+
+    @GetMapping("getTop5ByCallsDateTimeAndRequiredSkillsIn/{skill}")
+    List<Calls> findTop5ByOrderByCallsDateTimeAscAndRequiredSkillsIn(@PathVariable CallSkills skill) {
+        return callsServices.findTop5ByOrderByCallsDateTimeAscAndRequiredSkillsIn(skill);
+    }
+
+    @GetMapping("existsByPhoneNumber/{phoneNumber}")
+    boolean existsByPhoneNumber(@PathVariable String phoneNumber) {
+        return callsServices.existsByPhoneNumber(phoneNumber);
+    }
+
+    @GetMapping("countByStatus/{status}")
+    long countByStatus(@PathVariable CallStatus status) {
+        return callsServices.countByStatus(status);
     }
 
     @PutMapping("assignCallsToAgents")

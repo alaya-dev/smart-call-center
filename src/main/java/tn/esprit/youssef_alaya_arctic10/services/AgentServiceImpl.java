@@ -2,6 +2,7 @@ package tn.esprit.youssef_alaya_arctic10.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import tn.esprit.youssef_alaya_arctic10.entities.Agent;
 import tn.esprit.youssef_alaya_arctic10.entities.Project;
@@ -47,6 +48,7 @@ public class AgentServiceImpl implements IAgentService {
         return agentRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Agent AddAndAssignToProjects(Agent agent) {
         Agent newAgent= agentRepository.save(agent);

@@ -173,4 +173,39 @@ public class CallsServicesImpl implements ICallsServices{
         }
     }
 
+    @Override
+    public List<Calls> findByStatusAndAssignedAgent_AgentsId(CallStatus status, long agentId) {
+        return callsRepository.findByStatusAndAssignedAgent_AgentsId(status, agentId);
+    }
+
+    @Override
+    public List<Calls> findByStatus(CallStatus status) {
+        return callsRepository.findByStatus(status);
+    }
+
+    @Override
+    public List<Calls> findByAssignedAgentIsNull() {
+        return callsRepository.findByAssignedAgentIsNull();
+    }
+
+    @Override
+    public List<Calls> findByRequiredSkillsContains(CallSkills skill) {
+        return callsRepository.findByRequiredSkillsContains(skill);
+    }
+
+    @Override
+    public List<Calls> findTop5ByOrderByCallsDateTimeAscAndRequiredSkillsIn(CallSkills skill) {
+        return callsRepository.findTop5ByOrderByCallsDateTimeAscAndRequiredSkillsIn(skill);
+    }
+
+    @Override
+    public boolean existsByPhoneNumber(String phoneNumber) {
+        return callsRepository.existsByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public long countByStatus(CallStatus status) {
+        return callsRepository.countByStatus(status);
+    }
+
 }
