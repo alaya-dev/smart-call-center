@@ -15,6 +15,15 @@ import lombok.experimental.FieldDefaults;
 public class ProjectDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "project_details_gen")
+    @TableGenerator(
+            name = "project_details_gen",
+            table = "id_generator",
+            pkColumnName = "gen_name",
+            valueColumnName = "gen_value",
+            pkColumnValue = "project_details_id",
+            allocationSize = 1
+    )
     Long detailsId;
 
     Double budget;

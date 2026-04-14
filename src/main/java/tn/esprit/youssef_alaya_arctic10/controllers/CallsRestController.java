@@ -100,4 +100,9 @@ public class CallsRestController {
         callsServices.assignCallsToAgents(callIds);
     }
 
+    @GetMapping("/project/{libelle}")
+    public List<Calls> getCallsByProject(@PathVariable String libelle) {
+        return callsServices.getCallsByProjectLibelle(libelle);
+    }
+
 }

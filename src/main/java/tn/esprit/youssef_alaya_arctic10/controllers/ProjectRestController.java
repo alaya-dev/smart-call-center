@@ -2,8 +2,11 @@ package tn.esprit.youssef_alaya_arctic10.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.youssef_alaya_arctic10.entities.Calls;
 import tn.esprit.youssef_alaya_arctic10.entities.Project;
 import tn.esprit.youssef_alaya_arctic10.services.IProjectServices;
+import tn.esprit.youssef_alaya_arctic10.dto.ProjectsDTO;
+import java.util.List;
 
 @RequestMapping("project")
 @RestController
@@ -26,9 +29,8 @@ public class ProjectRestController {
         projectServices.deleteProjectById(id);
     }
 
-    @GetMapping("get")
-    public void getAll() {
-        projectServices.getAll();
+    public List<Project> getAll() {
+        return projectServices.getAll();
     }
 
     @GetMapping("get/{id}")
@@ -40,4 +42,11 @@ public class ProjectRestController {
     public Project assignToAgent(@PathVariable long projectId, @PathVariable long agentId) {
         return projectServices.assignToAgent(projectId, agentId);
     }
+
+    @GetMapping("findProject/{id}")
+    public ProjectsDTO getProjectDTOById(@PathVariable long id) {
+        return projectServices.findProjectDTO(id);
+    }
+
+
 }

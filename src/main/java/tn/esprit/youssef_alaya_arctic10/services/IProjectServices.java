@@ -3,6 +3,7 @@ package tn.esprit.youssef_alaya_arctic10.services;
 import tn.esprit.youssef_alaya_arctic10.entities.Agent;
 import tn.esprit.youssef_alaya_arctic10.entities.Calls;
 import tn.esprit.youssef_alaya_arctic10.entities.Project;
+import tn.esprit.youssef_alaya_arctic10.dto.ProjectsDTO;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface IProjectServices {
     List<Agent> getAgents(long projectId);
     Project assignToAgent(long projectId, long agentId);
 
+    ProjectsDTO findProjectDTO(long id);
+    ProjectsDTO getProjectDTO(Project project);
 }

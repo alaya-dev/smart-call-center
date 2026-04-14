@@ -7,7 +7,8 @@ import tn.esprit.youssef_alaya_arctic10.entities.Agent;
 import tn.esprit.youssef_alaya_arctic10.entities.Project;
 import tn.esprit.youssef_alaya_arctic10.repositories.IAgentRepository;
 import tn.esprit.youssef_alaya_arctic10.repositories.IProjectRepository;
-
+import tn.esprit.youssef_alaya_arctic10.dto.ProjectsDTO;
+import tn.esprit.youssef_alaya_arctic10.dto.ProjectMapper;
 import java.util.List;
 
 @Service
@@ -16,9 +17,15 @@ public class ProjectServicesImpl implements IProjectServices{
 
     private final IProjectRepository projectRepository;
     private final IAgentRepository agentRepository;
+    private final ProjectMapper projectMapper;
 
     @Override
     public Project addProject(Project project) {
+        // Ensure POST /add always creates new rows and never merges detached entities.
+        project.setProjectsId(null);
+        if (project.getProjectDetails() != null) {
+            project.getProjectDetails().setDetailsId(null);
+        }
         return projectRepository.save(project);
     }
 
@@ -59,6 +66,21 @@ public class ProjectServicesImpl implements IProjectServices{
         Agent agent = agentRepository.findById(agentId).orElseThrow(()->new EntityNotFoundException("Agent with id "+agentId+" not found"));
         project.getAgents().add(agent); // affectation du projet à l'agent
         return projectRepository.save(project);
+    }
+
+    @Override
+    public ProjectsDTO findProjectDTO(long id) {
+        Project project = projectRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("project with id " + id + " not found"));
+        return projectMapper.toDTO(project);
+    }
+
+    @Override
+    public ProjectsDTO getProjectDTO(Project project) {
+        ProjectsDTO projectsDTO = new ProjectsDTO();
+        projectsDTO.setProjectId(project.getProjectsId());
+        projectsDTO.setProjectName(project.getLibelle());
+        projectsDTO.setClientName(project.getProjectDetails().getClient());
+        return projectsDTO;
     }
 
 }

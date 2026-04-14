@@ -195,7 +195,7 @@ public class CallsServicesImpl implements ICallsServices{
 
     @Override
     public List<Calls> findTop5ByOrderByCallsDateTimeAscAndRequiredSkillsIn(CallSkills skill) {
-        return callsRepository.findTop5ByOrderByCallsDateTimeAscAndRequiredSkillsIn(skill);
+        return callsRepository.findTop5ByRequiredSkillsContainsOrderByCallsDateTimeAsc(skill);
     }
 
     @Override
@@ -207,5 +207,12 @@ public class CallsServicesImpl implements ICallsServices{
     public long countByStatus(CallStatus status) {
         return callsRepository.countByStatus(status);
     }
+
+    @Override
+    public List<Calls> getCallsByProjectLibelle(String libelle) {
+        return callsRepository.getCallsByProjectLibelle(libelle);
+    }
+
+
 
 }
