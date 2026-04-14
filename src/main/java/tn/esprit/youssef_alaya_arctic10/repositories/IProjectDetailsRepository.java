@@ -27,4 +27,7 @@ public interface IProjectDetailsRepository extends JpaRepository<ProjectDetails,
             """)
     double sumOfBudgetByAgentName(String agentName);
 
+
+
+
 }

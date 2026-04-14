@@ -24,11 +24,13 @@ public class Project {
     LocalDate startDate;
     LocalDate endDate;
 
-//    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+ //   @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     ProjectDetails projectDetails;
 
     @ManyToMany(fetch = FetchType.EAGER)
     Set<Agent> agents = new HashSet<>();
+
+
 
 }

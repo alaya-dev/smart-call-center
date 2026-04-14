@@ -2,21 +2,27 @@ package tn.esprit.youssef_alaya_arctic10.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.youssef_alaya_arctic10.entities.Agent;
 import tn.esprit.youssef_alaya_arctic10.entities.Project;
 import tn.esprit.youssef_alaya_arctic10.repositories.IAgentRepository;
+import tn.esprit.youssef_alaya_arctic10.repositories.IProjectDetailsRepository;
 import tn.esprit.youssef_alaya_arctic10.repositories.IProjectRepository;
 import tn.esprit.youssef_alaya_arctic10.dto.ProjectsDTO;
 import tn.esprit.youssef_alaya_arctic10.dto.ProjectMapper;
 import java.util.List;
+import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProjectServicesImpl implements IProjectServices{
 
     private final IProjectRepository projectRepository;
     private final IAgentRepository agentRepository;
+    private final IProjectDetailsRepository projectDetailsRepository;
     private final ProjectMapper projectMapper;
 
     @Override
@@ -81,6 +87,20 @@ public class ProjectServicesImpl implements IProjectServices{
         projectsDTO.setProjectName(project.getLibelle());
         projectsDTO.setClientName(project.getProjectDetails().getClient());
         return projectsDTO;
+    }
+
+
+    @Override
+    public double sumOfBudgetByAgentName(String agentName) {
+        return projectDetailsRepository.sumOfBudgetByAgentName(agentName);
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    @Override
+    public void sumProjectsByAgents() {
+
+        log.info("Sum Project budget is calculated!");
+
     }
 
 }

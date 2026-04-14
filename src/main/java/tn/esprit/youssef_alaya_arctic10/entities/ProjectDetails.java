@@ -30,5 +30,9 @@ public class ProjectDetails {
 
     String client;
 
+    @OneToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
+
 }
 

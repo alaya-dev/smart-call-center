@@ -11,6 +11,7 @@ public interface ICallsRepository extends JpaRepository<Calls, Long> {
     long countByAssignedAiSystem(AISystem aiSystem);
     boolean existsByPhoneNumber(String phoneNumber);
     long countByStatus(CallStatus status);
+    void deleteByStatus_OnHoldAndAssignedAgentisNullAndassignedAiSystemIsNUll();
 
     @Query("SELECT c FROM Calls c WHERE c.assignedAgent.agentsId = :idAgent")
     List<Calls> findCallsByAgent(@Param("idAgent") Long idAgent);
