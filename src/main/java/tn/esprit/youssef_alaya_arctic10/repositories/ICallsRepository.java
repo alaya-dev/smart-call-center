@@ -11,7 +11,6 @@ public interface ICallsRepository extends JpaRepository<Calls, Long> {
     long countByAssignedAiSystem(AISystem aiSystem);
     boolean existsByPhoneNumber(String phoneNumber);
     long countByStatus(CallStatus status);
-    void deleteByStatus_OnHoldAndAssignedAgentisNullAndassignedAiSystemIsNUll();
 
     @Query("SELECT c FROM Calls c WHERE c.assignedAgent.agentsId = :idAgent")
     List<Calls> findCallsByAgent(@Param("idAgent") Long idAgent);
@@ -45,4 +44,10 @@ public interface ICallsRepository extends JpaRepository<Calls, Long> {
             " JOIN agent.projects project" +
             " WHERE project.libelle = :libelle")
     List<Calls> getCallsByProjectLibelle(@Param("libelle") String projectLibelle);
+
+    @Query("DELETE FROM Calls c " +
+            "WHERE c.status = :status " +
+            "AND c.assignedAgent IS NULL " +
+            "AND c.assignedAiSystem IS NULL")
+    void deleteOldCalls(@Param("status") CallStatus status);
 }

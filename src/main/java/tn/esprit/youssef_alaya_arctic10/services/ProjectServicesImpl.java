@@ -27,7 +27,7 @@ public class ProjectServicesImpl implements IProjectServices{
 
     @Override
     public Project addProject(Project project) {
-        // Ensure POST /add always creates new rows and never merges detached entities.
+
         project.setProjectsId(null);
         if (project.getProjectDetails() != null) {
             project.getProjectDetails().setDetailsId(null);
